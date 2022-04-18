@@ -14,12 +14,21 @@ import AppText from "./AppText";
 import Screen from "./Screen";
 import PickerItem from "./PickerItem";
 
-function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
+function AppPicker({
+  icon,
+  items,
+  onSelectItem,
+  PickerItemComponent = PickerItem,
+  placeholder,
+  numberOfColumn=1,
+  selectedItem,
+  width = "100%",
+}) {
   const [modalVisiable, setModalVisiable] = useState(false);
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisiable(true)}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width }]}>
           {icon && (
             <MaterialCommunityIcons
               style={styles.icon}
@@ -28,9 +37,11 @@ function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
               color={defaultStyles.colors.medium}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
           <MaterialCommunityIcons
             style={{ paddingTop: 4 }}
             name="chevron-down"
@@ -44,13 +55,16 @@ function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
           <Button title="Close" onPress={() => setModalVisiable(false)} />
           <FlatList
             data={items}
+            horizontal={false}
+            numColumns={numberOfColumn}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
-              <PickerItem
+              <PickerItemComponent
                 label={item.label}
+                item={item}
                 onPress={() => {
-                    setModalVisiable(false)
-                    onSelectItem(item)
+                  setModalVisiable(false);
+                  onSelectItem(item);
                 }}
               />
             )}
@@ -65,9 +79,13 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "100%",
     padding: 15,
     marginVertical: 10,
+  },
+  placeholder: {
+    color: defaultStyles.colors.medium,
+    flex: 1,
+    fontSize: 18,
   },
   text: {
     flex: 1,

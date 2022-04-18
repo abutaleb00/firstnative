@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, Switch } from "react-native";
-import "react-native-gesture-handler";
+import React, { useState, useEffect } from "react";
+import { View, Text, Switch, Button, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ViewImageScreen from "./app/screems/ViewImageScreen";
 import WelcomeScreen from "./app/screems/WelcomeScreen";
-
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import AppText from "./app/component/AppText";
 import AppButton from "./app/component/Button";
 import Card from "./app/component/Card/Card";
@@ -20,6 +20,9 @@ import AppTextInput from "./app/component/AppTextInput";
 import colors from "./app/config/colors";
 import AppPicker from "./app/component/AppPicker";
 import LoginScreen from "./app/screems/LoginScreen";
+import ListingEditScreen from "./app/screems/ListingEditScreen";
+import ImageInput from "./app/component/ImageInput";
+import ImageInputList from "./app/component/ImageInputList";
 
 const categories = [
   { label: "Furnitue", value: 1 },
@@ -30,14 +33,31 @@ const categories = [
 export default function App() {
   const [firstName, setFirstName] = useState("");
   const [isNew, setIsnew] = useState(false);
-  const [category, setCategory]= useState(categories[0]);
+  const [category, setCategory] = useState(categories[0]);
+  const [imageUris, setImageUris] = useState([]);
+
+  const handleAdd = (uri) => {
+    setImageUris([...imageUris, uri]);
+  };
+
+  const handleRemove = (uri) => {
+    setImageUris(imageUris.filter((imageUri) => imageUri !== uri));
+  };
   return (
-    <LoginScreen />
+    // <Screen>
+    //   <ImageInputList
+    //     imageUri={imageUris}
+    //     onAddImage={handleAdd}
+    //     onRemoveImage={handleRemove}
+    //   />
+    // </Screen>
+    <ListingEditScreen />
+    // <LoginScreen />
     // <Screen>
     //   <AppTextInput placeholder="Username" icon="email" />
     //   <Switch value={isNew} onValueChange={(newValue) => setIsnew(newValue)} />
     //   <AppPicker
-    //    icon="apps" 
+    //    icon="apps"
     //    placeholder="Category"
     //    selectedItem={category}
     //    onSelectItem={item=> setCategory(item)}

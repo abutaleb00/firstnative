@@ -9,14 +9,14 @@ import ListItemDeletAction from "../component/ListItemDeletAction";
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title: "Hello World I'm here for a long text title",
+    description: "Hello World I'm here for a long text title Hello World I'm here for a long text title",
     image: require("../assets/user.jpg"),
   },
   {
     id: 2,
     title: "T2",
-    description: "D2",
+    description: "Used to truncate the text with an ellipsis after computing the text layout, including line wrapping,",
     image: require("../assets/user.jpg"),
   },
   {

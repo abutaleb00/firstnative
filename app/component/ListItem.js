@@ -2,14 +2,14 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  Text,
   Image,
   TouchableHighlight,
 } from "react-native";
 import {
-  GestureHandlerRootView,
   Swipeable,
 } from "react-native-gesture-handler";
+import {MaterialCommunityIcons} from "@expo/vector-icons"
+
 import colors from "../config/colors";
 import AppText from "./AppText";
 
@@ -22,32 +22,33 @@ function ListItem({
   renderRightActions,
 }) {
   return (
-    // <GestureHandlerRootView style={{ flex: 1 }}>
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
         <View style={styles.container}>
           {IconComponent}
           {image && <Image style={styles.image} source={image} />}
           <View style={styles.detailsContainer}>
-            <AppText style={styles.title}>{title}</AppText>
-            {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
+            <AppText style={styles.title} numberOfLines={1}>{title}</AppText>
+            {subTitle && <AppText style={styles.subTitle} numberOfLines={3} >{subTitle}</AppText>}
           </View>
+          <MaterialCommunityIcons name="chevron-right" size={20} color={colors.medium} />
         </View>
       </TouchableHighlight>
     </Swipeable>
-    // </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    alignItems:"center",
     padding: 15,
     backgroundColor: colors.white,
   },
   detailsContainer: {
     marginLeft: 10,
     justifyContent: "center",
+    flex:1,
   },
   image: {
     width: 70,
